@@ -1,0 +1,3 @@
+langdetect
+llama-cpp-python
+
