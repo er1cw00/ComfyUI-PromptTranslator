@@ -9,7 +9,6 @@ A ComfyUI custom node for translating text prompts using local GGUF models. Powe
 - **Local Translation**: Uses GGUF models via llama-cpp-python, no internet required
 - **Auto Language Detection**: Automatically detects input language using langdetect
 - **English & Chinese Support**: Translate to English or Chinese (Simplified)
-- **GPU Acceleration**: Automatically uses GPU if available (CUDA)
 - **Model Caching**: Loaded models are cached to avoid repeated loading
 
 ## 1. Installation
@@ -46,8 +45,8 @@ ComfyUI/
 ```
 
 The node will automatically:
-1. Create the `models/gguf/` directory on startup (if it doesn't exist)
-2. Scan and list all `.gguf` files in the dropdown menu
+1. Scan and list all `.gguf` files in  `models/gguf/` directory.
+2. Create the `models/gguf/` directory if it doesn't exist
 
 ### Recommended Models
 

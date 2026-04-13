@@ -9,7 +9,6 @@
 - **本地翻译**：使用 GGUF 模型通过 llama-cpp-python 运行，无需联网
 - **自动语言检测**：使用 langdetect 自动识别输入语言
 - **中英双语支持**：支持翻译成英文或中文（简体）
-- **GPU 加速**：自动检测并使用 GPU（CUDA）加速
 - **模型缓存**：已加载的模型会被缓存，避免重复加载
 
 ## 1. 安装方法
@@ -34,7 +33,7 @@ pip install -r requirements.txt
 
 ### GGUF 模型存放位置
 
-下载 `.gguf` 模型文件放在models/gguf目录下：
+请手动下载 `.gguf` 模型文件放在models/gguf目录下：
 
 ```
 ComfyUI/
@@ -46,8 +45,8 @@ ComfyUI/
 ```
 
 节点会自动：
-1. 启动时创建 `models/gguf/` 目录（如果不存在）
-2. 扫描并列出所有 `.gguf` 文件到下拉菜单
+1. 扫描并列出`models/gguf/` 目录下所有 `.gguf` 文件到下拉菜单
+2. 如果 `models/gguf/` 目录不存在，启动时将会自动创建
 
 ### 推荐模型
 
