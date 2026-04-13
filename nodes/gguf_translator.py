@@ -26,7 +26,7 @@ class GGUFTranslator:
             "- Keep all style tags, weights, parentheses, and comma-separated structure.\n"
             "- Preserve artistic keywords and rendering parameters.\n"
             "- Do not remove NSFW tags if present.\n"
-            "- If the user's prompt contains fewer than 3 words, translate it into a clear action-oriented phrase in English.\n"
+            "- Translate it into a clear action-oriented phrase in English.\n"
             "- Make the translation sound natural and expressive.\n"
             "- Output only the English translation.\n"
             "No explanation. No extra text."
@@ -43,28 +43,29 @@ class GGUFTranslator:
         ),
     }
 
-    def __init__(self, model_path: str, target_language: str = "English"):
+    def __init__(self, model_path: str, target_language: str = "English", device: str = "cpu", n_gpu_layers: int = -1):
         """
         Initialize the GGUF translator.
 
         Args:
             model_path: Full path to the .gguf model file
             target_language: Target language (English or Chinese (Simplified))
+            device: Device to use for inference (cpu, cuda, mps)
+            n_gpu_layers: Number of GPU layers (-1 for all), only used when device=cuda
         """
         self.model_path = model_path
         self.target_language = target_language
+        self.device = device
+        self.n_gpu_layers = 0  # CPU only by default
         self.llm = None
 
-        # GPU layer configuration
-        self.n_gpu_layers = 0  # CPU only by default
-        if torch.cuda.is_available():
-            vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
-            if vram_gb >= 20:
-                self.n_gpu_layers = -1  # All layers on GPU
-            elif vram_gb >= 8:
-                self.n_gpu_layers = 20
-            elif vram_gb >= 4:
-                self.n_gpu_layers = 10
+        # GPU layer configuration based on device selection
+        if device == "cuda" and torch.cuda.is_available():
+            # Use user-specified n_gpu_layers, -1 means all layers
+            self.n_gpu_layers = n_gpu_layers
+        elif device == "mps" and torch.backends.mps.is_available():
+            # MPS uses GPU layers for acceleration
+            self.n_gpu_layers = -1
 
         # Model parameters
         self.n_ctx = 4096
@@ -137,8 +138,10 @@ class GGUFTranslator:
             del self.llm
             self.llm = None
             gc.collect()
-            if torch.cuda.is_available():
+            if self.device == "cuda" and torch.cuda.is_available():
                 torch.cuda.empty_cache()
+            elif self.device == "mps" and torch.backends.mps.is_available():
+                torch.mps.empty_cache()
             print("[GGUFTranslator] Model unloaded")
 
 
@@ -146,21 +149,23 @@ class GGUFTranslator:
 _translator_cache = {}
 
 
-def get_translator(model_path: str, target_language: str) -> GGUFTranslator:
+def get_translator(model_path: str, target_language: str, device: str = "cpu", n_gpu_layers: int = -1) -> GGUFTranslator:
     """
     Get or create a cached translator instance.
 
     Args:
         model_path: Path to the GGUF model
         target_language: Target language
+        device: Device to use for inference (cpu, cuda, mps)
+        n_gpu_layers: Number of GPU layers (-1 for all), only used when device=cuda
 
     Returns:
         GGUFTranslator instance
     """
-    cache_key = f"{model_path}:{target_language}"
+    cache_key = f"{model_path}:{target_language}:{device}:{n_gpu_layers}"
 
     if cache_key not in _translator_cache:
-        _translator_cache[cache_key] = GGUFTranslator(model_path, target_language)
+        _translator_cache[cache_key] = GGUFTranslator(model_path, target_language, device, n_gpu_layers)
 
     return _translator_cache[cache_key]
 

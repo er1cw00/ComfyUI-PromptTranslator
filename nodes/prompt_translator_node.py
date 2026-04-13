@@ -51,6 +51,16 @@ class PromptTranslatorNode:
                 ], {
                     "default": "English"
                 }),
+                "device": (["cpu", "cuda", "mps"], {
+                    "default": "cpu"
+                }),
+                "n_gpu_layers": ("INT", {
+                    "default": -1,
+                    "min": -1,
+                    "max": 100,
+                    "step": 1,
+                    "tooltip": "Number of GPU layers (-1 for all, 0 for CPU). Only used when device=cuda"
+                }),
             }
         }
 
@@ -117,7 +127,7 @@ class PromptTranslatorNode:
             print(f"[PromptTranslator] Language detection failed: {e}")
             return 'auto'
 
-    def translate_prompt(self, prompt, model, target_language):
+    def translate_prompt(self, prompt, model, target_language, device="cpu", n_gpu_layers=-1):
         """
         Translate the prompt using GGUF model.
 
@@ -125,6 +135,8 @@ class PromptTranslatorNode:
             prompt: The input text to translate
             model: The selected GGUF model file
             target_language: The target language name
+            device: The device to use for inference (cpu, cuda, mps)
+            n_gpu_layers: Number of GPU layers (-1 for all), only used when device=cuda
 
         Returns:
             Tuple of (translated_text, original_text)
@@ -150,7 +162,7 @@ class PromptTranslatorNode:
             # Import here to avoid loading if not needed
             from .gguf_translator import get_translator
 
-            translator = get_translator(full_model_path, target_language)
+            translator = get_translator(full_model_path, target_language, device, n_gpu_layers)
             translated = translator.translate(prompt)
 
             return (translated, prompt)
