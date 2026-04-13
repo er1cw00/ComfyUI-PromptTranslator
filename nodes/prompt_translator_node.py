@@ -160,10 +160,11 @@ class PromptTranslatorNode:
 
         try:
             # Import here to avoid loading if not needed
-            from .gguf_translator import get_translator
+            from .gguf_translator import GGUFTranslator
 
-            translator = get_translator(full_model_path, target_language, device, n_gpu_layers)
+            translator = GGUFTranslator(full_model_path, target_language, device, n_gpu_layers)
             translated = translator.translate(prompt)
+            translator.unload()  # 立即卸载模型释放显存
 
             return (translated, prompt)
 
