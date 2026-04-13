@@ -45,12 +45,6 @@ class PromptTranslatorNode:
                 "model": (gguf_models if gguf_models else ["none"], {
                     "default": gguf_models[0] if gguf_models else "none"
                 }),
-                "target_language": ([
-                    "English",
-                    "Chinese (Simplified)"
-                ], {
-                    "default": "English"
-                }),
                 "device": (["cpu", "cuda", "mps"], {
                     "default": "cpu"
                 }),
@@ -61,13 +55,19 @@ class PromptTranslatorNode:
                     "step": 1,
                     "tooltip": "Number of GPU layers (-1 for all, 0 for CPU). Only used when device=cuda"
                 }),
+                "target_language": ([
+                    "English",
+                    "Chinese (Simplified)"
+                ], {
+                    "default": "English"
+                }),
             }
         }
 
     RETURN_TYPES = ("STRING", "STRING",)
     RETURN_NAMES = ("translated", "origin",)
     FUNCTION = "translate_prompt"
-    CATEGORY = "utils/text"
+    CATEGORY = "utils/prompt"
     OUTPUT_NODE = False
 
     # Mapping from langdetect codes to target language codes

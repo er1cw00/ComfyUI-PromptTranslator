@@ -23,7 +23,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "PromptTranslatorNode": "Prompt Translator",
+    "PromptTranslatorNode": "Prompt Translator (GGUF)",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
