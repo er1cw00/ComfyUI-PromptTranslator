@@ -16,12 +16,10 @@ A ComfyUI custom node for translating text prompts using local GGUF models. Powe
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.10+
 - ComfyUI installed
 
 ### Install the Node
-
-#### Method 1: Clone into ComfyUI custom nodes
 
 ```bash
 cd ComfyUI/custom_nodes
@@ -29,27 +27,14 @@ git clone https://github.com/yourusername/ComfyUI-PromptTranslator.git
 cd ComfyUI-PromptTranslator
 pip install -r requirements.txt
 ```
+Restart ComfyUI
 
-#### Method 2: Manual Installation
-
-1. Download and extract this repository to `ComfyUI/custom_nodes/ComfyUI-PromptTranslator/`
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Restart ComfyUI
-
-### Requirements
-
-The `requirements.txt` includes:
-- `langdetect` - For automatic language detection
-- `llama-cpp-python` - For running GGUF models locally
 
 ## 2. Model Directory
 
 ### Where to place GGUF models
 
-Place your `.gguf` model files in:
+Place your `.gguf` model files in models/gguf:
 
 ```
 ComfyUI/
@@ -78,9 +63,7 @@ The node will automatically:
 
 ### Screenshot
 
-![Node Screenshot](assets/screenshot.png)
-
-*Place your screenshot image at `assets/screenshot.png`*
+![Node Screenshot](docs/screenshot.png)
 
 ## License
 

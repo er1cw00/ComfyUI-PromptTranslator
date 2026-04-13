@@ -2,7 +2,7 @@
 
 [English](README_EN.md) | 中文
 
-一个基于本地 GGUF 模型的 ComfyUI 自定义节点，用于翻译文生图提示词。使用 llama-cpp-python 驱动，支持中英文互译，无需联网或 API 密钥。
+一个基于本地 GGUF 模型的 ComfyUI 自定义节点，用于翻译文生图提示词。使用 llama-cpp-python 驱动，支持任何语言翻译成中文或者英文，无需联网或 API Key。
 
 ## 功能特性
 
@@ -14,14 +14,12 @@
 
 ## 1. 安装方法
 
-### 前置要求
+### 要求
 
-- Python 3.8+
+- Python 3.10+
 - 已安装 ComfyUI
 
 ### 安装节点
-
-#### 方法一：克隆到 ComfyUI 自定义节点目录
 
 ```bash
 cd ComfyUI/custom_nodes
@@ -29,27 +27,14 @@ git clone https://github.com/yourusername/ComfyUI-PromptTranslator.git
 cd ComfyUI-PromptTranslator
 pip install -r requirements.txt
 ```
+重启 ComfyUI
 
-#### 方法二：手动安装
-
-1. 下载并解压本仓库到 `ComfyUI/custom_nodes/ComfyUI-PromptTranslator/`
-2. 安装依赖：
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. 重启 ComfyUI
-
-### 依赖项
-
-`requirements.txt` 包含：
-- `langdetect` - 自动语言检测
-- `llama-cpp-python` - 本地运行 GGUF 模型
 
 ## 2. 模型目录
 
 ### GGUF 模型存放位置
 
-将你的 `.gguf` 模型文件放在：
+下载 `.gguf` 模型文件放在models/gguf目录下：
 
 ```
 ComfyUI/
@@ -78,9 +63,8 @@ ComfyUI/
 
 ### 截图
 
-![节点截图](assets/screenshot.png)
+![节点截图](docs/screenshot.png)
 
-*将截图放在 `assets/screenshot.png`*
 
 ## 许可证
 
