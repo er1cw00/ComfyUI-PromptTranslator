@@ -9,7 +9,9 @@ A ComfyUI custom node for translating text prompts using local GGUF models. Powe
 - **Local Translation**: Uses GGUF models via llama-cpp-python, no internet required
 - **Auto Language Detection**: Automatically detects input language using langdetect
 - **English & Chinese Support**: Translate to English or Chinese (Simplified)
-- **Model Caching**: Loaded models are cached to avoid repeated loading
+- **Device Selection**: Support CPU, CUDA, MPS (Apple Silicon) inference
+- **VRAM Optimization**: Automatically unload model after translation to free VRAM
+- **Text Display Node**: Built-in ShowTextNode for debugging and displaying translation results
 
 ## 1. Installation
 
@@ -60,9 +62,21 @@ The node will automatically:
 
 ## 3. Usage Guide
 
-### Screenshot
+### Prompt Translator Node
 
-![Node Screenshot](docs/screenshot.png)
+- **prompt**: Input prompt to be translated
+- **model**: Select GGUF model
+- **device**: Select inference device (cpu/cuda/mps)
+- **n_gpu_layers**: Number of GPU layers (only effective when device=cuda, -1 means all layers on GPU)
+- **target_language**: Target language (English or Chinese (Simplified))
+
+### Show Text Node
+
+Used for displaying and debugging text content. Can visualize the translation results from PromptTranslatorNode.
+
+- **text**: Input text (supports connection from other nodes' STRING output)
+- Displays input text content on the node in real-time
+- Supports multi-line text display
 
 ## License
 

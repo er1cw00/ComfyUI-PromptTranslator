@@ -9,7 +9,9 @@
 - **本地翻译**：使用 GGUF 模型通过 llama-cpp-python 运行，无需联网
 - **自动语言检测**：使用 langdetect 自动识别输入语言
 - **中英双语支持**：支持翻译成英文或中文（简体）
-- **模型缓存**：已加载的模型会被缓存，避免重复加载
+- **设备选择**：支持 CPU、CUDA、MPS (Apple Silicon) 推理
+- **显存优化**：翻译完成后自动卸载模型，不占用显存
+- **文本显示节点**：内置 ShowTextNode 用于调试和展示翻译结果
 
 ## 1. 安装方法
 
@@ -59,6 +61,22 @@ ComfyUI/
 
 
 ## 3. 使用指南
+
+### Prompt Translator 节点
+
+- **prompt**: 输入需要翻译的提示词
+- **model**: 选择 GGUF 模型
+- **device**: 选择推理设备 (cpu/cuda/mps)
+- **n_gpu_layers**: GPU 层数（仅 device=cuda 时生效，-1 表示全部层使用 GPU）
+- **target_language**: 目标语言（English 或 Chinese (Simplified)）
+
+### Show Text 节点
+
+用于显示和调试文本内容，可将 PromptTranslatorNode 的翻译结果可视化。
+
+- **text**: 输入文本（支持连接到其他节点的 STRING 输出）
+- 节点上会实时显示输入的文本内容
+- 支持多行文本显示
 
 ### 截图
 
