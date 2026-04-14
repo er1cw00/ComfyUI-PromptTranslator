@@ -1,41 +1,39 @@
 # ComfyUI-PromptTranslator
 
-[English](README_EN.md) | 中文
+English | [中文](README_zh.md)
 
-一个基于本地 GGUF 模型的 ComfyUI 自定义节点，用于翻译文生图提示词。使用 llama-cpp-python 驱动，支持任何语言翻译成中文或者英文，无需联网或 API Key。
+A ComfyUI custom node for translating text prompts using local GGUF models. Powered by llama-cpp-python, it supports translation to English or Chinese without requiring internet connection or API keys.
 
-## 功能特性
+## Features
 
-- **本地翻译**：使用 GGUF 模型通过 llama-cpp-python 运行，无需联网
-- **自动语言检测**：使用 langdetect 自动识别输入语言
-- **中英双语支持**：支持翻译成英文或中文（简体）
-- **设备选择**：支持 CPU、CUDA、MPS (Apple Silicon) 推理
-- **显存优化**：翻译完成后自动卸载模型，不占用显存
-- **文本显示节点**：内置 ShowTextNode 用于调试和展示翻译结果
+- **Local Translation**: Uses GGUF models via llama-cpp-python, no internet required
+- **English & Chinese Support**: Translate to English or Chinese (Simplified)
+- **VRAM Optimization**: Automatically unload model after translation to free VRAM
+- **Text Display Node**: Built-in ShowTextNode for debugging and displaying translation results
 
-## 1. 安装方法
+## 1. Installation
 
-### 要求
+### Prerequisites
 
 - Python 3.10+
-- 已安装 ComfyUI
+- ComfyUI installed
 
-### 安装节点
+### Install the Node
 
 ```bash
 cd ComfyUI/custom_nodes
-git clone https://github.com/yourusername/ComfyUI-PromptTranslator.git
+git clone https://github.com/er1cw00/ComfyUI-PromptTranslator.git
 cd ComfyUI-PromptTranslator
 pip install -r requirements.txt
 ```
-重启 ComfyUI
+Restart ComfyUI
 
 
-## 2. 模型目录
+## 2. Model Directory
 
-### GGUF 模型存放位置
+### Where to place GGUF models
 
-请手动下载 `.gguf` 模型文件放在models/gguf目录下：
+Place your `.gguf` model files in models/gguf:
 
 ```
 ComfyUI/
@@ -46,44 +44,40 @@ ComfyUI/
 │       └── ...
 ```
 
-节点会自动：
-1. 扫描并列出`models/gguf/` 目录下所有 `.gguf` 文件到下拉菜单
-2. 如果 `models/gguf/` 目录不存在，启动时将会自动创建
+The node will automatically:
+1. Scan and list all `.gguf` files in  `models/gguf/` directory.
+2. Create the `models/gguf/` directory if it doesn't exist
 
-### 推荐模型
+### Recommended Models
 
-| 模型 | 大小 | 下载链接 |
-|------|------|----------|
+| Model | Size | Download |
+|-------|------|----------|
 | Qwen2.5-7B-Instruct-Q4_K_M.gguf | ~4.7GB | [HuggingFace](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF) |
 | Qwen2.5-7B-Instruct-Uncensored.Q4_K_M.gguf | ~4.7GB | [HuggingFace](https://huggingface.co/QuantFactory/Qwen2.5-7B-Instruct-Uncensored-GGUF/resolve/main/Qwen2.5-7B-Instruct-Uncensored.Q4_K_M.gguf) |
 
-**注意**：模型越大翻译质量越好，但需要更多显存/内存。
+**Note**: Larger models provide better translation quality but require more VRAM/RAM.
 
 
-## 3. 使用指南
+## 3. Usage Guide
 
-### Prompt Translator 节点
+### Prompt Translator Node
 
-- **prompt**: 输入需要翻译的提示词
-- **model**: 选择 GGUF 模型
-- **device**: 选择推理设备 (cpu/cuda/mps)
-- **n_gpu_layers**: GPU 层数（仅 device=cuda 时生效，-1 表示全部层使用 GPU）
-- **target_language**: 目标语言（English 或 Chinese (Simplified)）
+- **prompt**: Input prompt to be translated
+- **model**: Select GGUF model
+- **device**: Select inference device (cpu/cuda/mps)
+- **n_gpu_layers**: Number of GPU layers (only effective when device=cuda, -1 means all layers on GPU)
+- **target_language**: Target language (English or Chinese (Simplified))
 
-### Show Text 节点
+### Show Text Node
 
-用于显示和调试文本内容，可将 PromptTranslatorNode 的翻译结果可视化。
+Used for displaying and debugging text content. Can visualize the translation results from PromptTranslatorNode.
 
-- **text**: 输入文本（支持连接到其他节点的 STRING 输出）
-- 节点上会实时显示输入的文本内容
-- 支持多行文本显示
+- **text**: Input text (supports connection from other nodes' STRING output)
+- Displays input text content on the node in real-time
 
-### 截图
+![Screenshot](docs/screenshot.png)
 
-![节点截图](docs/screenshot.png)
-
-
-## 许可证
+## License
 
 MIT License
 
