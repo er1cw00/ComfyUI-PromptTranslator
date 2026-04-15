@@ -57,7 +57,7 @@ class PromptTranslatorNode:
                 }),
                 "target_language": ([
                     "English",
-                    "Chinese (Simplified)"
+                    "Chinese"
                 ], {
                     "default": "English"
                 }),
@@ -113,7 +113,7 @@ class PromptTranslatorNode:
 
     TARGET_LANGUAGE_CODES = {
         "English": "en",
-        "Chinese (Simplified)": "zh-CN",
+        "Chinese": "zh-CN",
     }
 
     @staticmethod
