@@ -61,6 +61,12 @@ class PromptTranslatorNode:
                 ], {
                     "default": "English"
                 }),
+            },
+            "optional": {
+                "auto_release": ("BOOLEAN", {
+                    "default": True,
+                    "tooltip": "Release model memory after translation"
+                }),
             }
         }
 
@@ -127,7 +133,7 @@ class PromptTranslatorNode:
             print(f"[PromptTranslator] Language detection failed: {e}")
             return 'auto'
 
-    def translate_prompt(self, prompt, model, target_language, device="cpu", n_gpu_layers=-1):
+    def translate_prompt(self, prompt, model, target_language, device="cpu", n_gpu_layers=-1, auto_release=True):
         """
         Translate the prompt using GGUF model.
 
@@ -164,7 +170,10 @@ class PromptTranslatorNode:
 
             translator = GGUFTranslator(full_model_path, target_language, device, n_gpu_layers)
             translated = translator.translate(prompt)
-            translator.unload()  # 立即卸载模型释放显存
+
+            # Release model only if auto_release is True
+            if auto_release:
+                translator.unload()
 
             return (translated, prompt)
 
