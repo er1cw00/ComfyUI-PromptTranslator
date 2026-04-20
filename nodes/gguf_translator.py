@@ -31,7 +31,7 @@ class GGUFTranslator:
             "- Output only the English translation.\n"
             "No explanation. No extra text."
         ),
-        "Chinese (Simplified)": (
+        "Chinese": (
             "您是专业的图像编辑提示词工程师，你的任务是将用户的提示翻译成中文。\n"
             "规则：\n"
             "- 保留所有样式标签、括号和逗号分隔的结构。\n"
