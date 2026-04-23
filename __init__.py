@@ -20,13 +20,13 @@ else:
     print(f"[PromptTranslatorNode] Found directory: {model_path}")
 
 NODE_CLASS_MAPPINGS = {
-    "GGUF Loader": GGUFLoader,
+    "GGUFLoader": GGUFLoader,
     "PromptTranslatorNode": PromptTranslatorNode,
     "ShowTextNode": ShowTextNode,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "GGUFLoader": "GGUF Loader",
+    "GGUFLoader": "GGUFLoader",
     "PromptTranslatorNode": "Prompt Translator (GGUF)",
     "ShowTextNode": "Show Text",
 }
