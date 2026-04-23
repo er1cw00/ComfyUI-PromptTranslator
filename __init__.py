@@ -5,7 +5,7 @@ A custom node for translating prompts to different languages
 
 import os
 import folder_paths
-from .nodes.prompt_translator_node import PromptTranslatorNode
+from .nodes.prompt_translator_node import PromptTranslatorNode, GGUFLoader
 from .nodes.show_text_node import ShowTextNode
 
 # Add gguf model folder path
@@ -20,11 +20,13 @@ else:
     print(f"[PromptTranslatorNode] Found directory: {model_path}")
 
 NODE_CLASS_MAPPINGS = {
+    "GGUF Loader": GGUFLoader,
     "PromptTranslatorNode": PromptTranslatorNode,
     "ShowTextNode": ShowTextNode,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
+    "GGUFLoader": "GGUF Loader",
     "PromptTranslatorNode": "Prompt Translator (GGUF)",
     "ShowTextNode": "Show Text",
 }
